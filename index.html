@@ -8,7 +8,12 @@
     <input type="text" id="imp">
     <button id="go">search</button>
     <div id="result">
-
+        <!-- <div>
+            <img src="" alt="Logo">
+            <h1 id='title'></h1>
+            <h2 id='price'></h2>
+            <span id="description"></span>
+        </div> -->
     </div>
 </body>
 <script>
@@ -25,22 +30,65 @@
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === this.DONE) {
                 console.log(this.responseText);
+
+                AddToPage(xhr.responseText)
             }
         });
 
-        xhr.open("GET", "https://amazon-price1.p.rapidapi.com/search?keywords="+x+"&marketplace=IN");
+        xhr.open("GET", "https://amazon-price1.p.rapidapi.com/search?keywords=" + x + "&marketplace=IN");
         xhr.setRequestHeader("x-rapidapi-key", "b14b9e8d80msh838de2b100c7723p1740d5jsnf6fdfa99ccf6");
         xhr.setRequestHeader("x-rapidapi-host", "amazon-price1.p.rapidapi.com");
-
+        xhr.onreadystatechange = AddToPage;
         xhr.send(data);
-        console.log(xhr.responseText)
+        // console.log(xhr.responseText)
+        // AddToPage(data)
 
     })
+    function AddToPage(data) {
+        var element = document.getElementById("result");
 
+
+        var obj = JSON.parse(data)
+        for (var i = 0; i < obj.length; i++) {
+            console.log(obj[i].title)
+            var e = document.createElement("div")
+
+            e.innerHTML = `
+            <div>
+            <img src="`+obj[i].imageUrl+`" alt="Logo">
+            <h1 class='title'>`+obj[i].title+`</h1>
+            <h2 class='price'>`+obj[i].price+`</h2>
+             <span class="Link"><a href="`+obj[i].detailPageURL+`"> Click to buy now</a></span>
+        </div>
+            
+            `
+            element.appendChild(e);
+
+        }
+
+
+    }
 
 
 
 
 </script>
+<!-- <script src="index.css"></script> -->
 
+<style>
+    body {
+    /* background-color: lightblue; */
+    padding: 2%;
+  }
+  
+  h1 {
+    color: navy;
+    margin-left: 20px;
+    text-align: center;
+
+  }
+  div{
+      padding: 2%;
+  }
+</style>
 </html>
