@@ -1,0 +1,46 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <input type="text" id="imp">
+    <button id="go">search</button>
+    <div id="result">
+
+    </div>
+</body>
+<script>
+    document.getElementById("go").addEventListener("click", () => {
+
+        var x = document.getElementById("imp").value
+
+        // <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"><
+        const data = null;
+
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === this.DONE) {
+                console.log(this.responseText);
+            }
+        });
+
+        xhr.open("GET", "https://amazon-price1.p.rapidapi.com/search?keywords="+x+"&marketplace=IN");
+        xhr.setRequestHeader("x-rapidapi-key", "b14b9e8d80msh838de2b100c7723p1740d5jsnf6fdfa99ccf6");
+        xhr.setRequestHeader("x-rapidapi-host", "amazon-price1.p.rapidapi.com");
+
+        xhr.send(data);
+        console.log(xhr.responseText)
+
+    })
+
+
+
+
+
+</script>
+
+</html>
